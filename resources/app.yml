@@ -1,0 +1,29 @@
+resources:
+  apps:
+    glance_genad_app:
+      name: glance-genad
+      description: "Glance GenAd - real-time generative lock-screen ads vs static banners (Attention Friction & Ad Blindness demo)"
+      source_code_path: ../app
+      resources:
+        - name: sql-warehouse
+          sql_warehouse:
+            id: ${var.warehouse_id}
+            permission: CAN_USE
+        - name: genie-space
+          genie_space:
+            name: "Glance GenAd - Ad Effectiveness Analytics"
+            space_id: ${var.genie_space_id}
+            permission: CAN_RUN
+        - name: llm
+          serving_endpoint:
+            name: databricks-claude-haiku-5-5
+            permission: CAN_QUERY
+        - name: embeddings
+          serving_endpoint:
+            name: databricks-gte-large-en
+            permission: CAN_QUERY
+        - name: postgres
+          postgres:
+            branch: projects/${var.lakebase_project}/branches/${var.lakebase_branch}
+            database: projects/${var.lakebase_project}/branches/${var.lakebase_branch}/databases/${var.lakebase_database}
+            permission: CAN_CONNECT_AND_CREATE

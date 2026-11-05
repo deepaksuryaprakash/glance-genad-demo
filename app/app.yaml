@@ -1,0 +1,16 @@
+command: ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+env:
+  - name: DATABRICKS_WAREHOUSE_ID
+    valueFrom: sql-warehouse
+  - name: GENIE_SPACE_ID
+    valueFrom: genie-space
+  - name: LAKEBASE_ENDPOINT
+    value: projects/glance-genad/branches/production/endpoints/primary
+  - name: DEMO_CATALOG
+    value: glance_genad
+  - name: VS_INDEX
+    value: glance_genad.gold.brand_asset_registry_index
+  - name: LLM_ENDPOINT
+    value: databricks-claude-haiku-5-5
+  - name: EMBED_ENDPOINT
+    value: databricks-gte-large-en

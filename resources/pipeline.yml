@@ -1,0 +1,15 @@
+resources:
+  pipelines:
+    glance_pipeline:
+      name: "Glance GenAd - Lakeflow medallion pipeline"
+      catalog: ${var.catalog}
+      schema: silver
+      serverless: true
+      photon: true
+      channel: CURRENT
+      root_path: ../src/pipeline
+      libraries:
+        - glob:
+            include: ../src/pipeline/**
+      tags:
+        demo: glance_genad

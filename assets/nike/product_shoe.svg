@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 220">
+  <defs>
+    <linearGradient id="up" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b2f3a"/><stop offset="1" stop-color="#0f1115"/></linearGradient>
+    <linearGradient id="sole" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f4f4"/><stop offset="1" stop-color="#cfcfcf"/></linearGradient>
+  </defs>
+  <ellipse cx="205" cy="200" rx="170" ry="10" fill="#000" opacity=".25"/>
+  <path d="M40 150 C 60 110, 110 95, 150 92 C 175 70, 205 52, 238 50 C 252 50, 262 58, 268 72 C 290 110, 330 118, 362 128 C 380 134, 386 150, 378 162 L 60 170 C 44 170, 36 162, 40 150 Z" fill="url(#up)"/>
+  <path d="M150 92 C 170 100, 200 104, 238 96 L 268 72 C 262 58, 252 50, 238 50 C 205 52, 175 70, 150 92 Z" fill="#3a4050"/>
+  <path d="M95 140 C 160 132, 240 120, 330 96 C 260 140, 170 150, 95 140 Z" fill="#FA5400"/>
+  <g stroke="#9aa3b5" stroke-width="3" stroke-linecap="round"><line x1="185" y1="78" x2="205" y2="90"/><line x1="200" y1="68" x2="220" y2="80"/><line x1="215" y1="60" x2="235" y2="72"/></g>
+  <path d="M36 160 L 382 152 C 388 166, 380 182, 360 184 L 62 188 C 44 188, 34 176, 36 160 Z" fill="url(#sole)"/>
+  <g fill="#1E3A8A" opacity=".55"><rect x="70" y="180" width="14" height="6" rx="2"/><rect x="100" y="180" width="14" height="6" rx="2"/><rect x="130" y="180" width="14" height="6" rx="2"/><rect x="160" y="180" width="14" height="6" rx="2"/><rect x="190" y="179" width="14" height="6" rx="2"/><rect x="220" y="179" width="14" height="6" rx="2"/><rect x="250" y="178" width="14" height="6" rx="2"/><rect x="280" y="178" width="14" height="6" rx="2"/><rect x="310" y="177" width="14" height="6" rx="2"/></g>
+  <text x="300" y="140" font-family="Arial Black,Arial" font-size="13" fill="#cfd5e2" opacity=".8">GTX</text>
+</svg>

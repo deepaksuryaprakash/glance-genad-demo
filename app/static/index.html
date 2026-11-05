@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Glance GenAd · Attention Friction & Ad Blindness</title>
+<link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brandmark"><span class="dot"></span>Glance <b>GenAd</b> <span class="sub">Real-time generative lock-screen ads</span></div>
+  <div class="stack" id="stack">
+    <span class="chip" title="Lakebase Postgres: user profiles, live context stream, decisions">Lakebase</span>
+    <span class="chip" title="Lakeflow Spark Declarative Pipelines: bronze → silver → gold">Lakeflow SDP</span>
+    <span class="chip" title="Unity Catalog: row filters, PII masks, lineage">Unity Catalog</span>
+    <span class="chip" title="Vector Search: brand asset latent-space matching">Vector Search</span>
+    <span class="chip" title="MLflow + UC model registry: CTR / dwell / opt-out models">MLflow</span>
+    <span class="chip" title="Metric views: governed KPIs for dashboards and Genie">Metric Views</span>
+    <span class="chip" title="Genie agent for ad-hoc analytics">Genie</span>
+  </div>
+  <div class="status" id="status">connecting…</div>
+</header>
+
+<main class="grid">
+  <!-- ============ PANEL 1: SIMULATION CONTROLS ============ -->
+  <section class="panel controls">
+    <h2><span class="num">1</span>Simulation Controls <small>play God with the context</small></h2>
+
+    <label class="lbl">Brand</label>
+    <div class="seg" id="brandSeg"></div>
+
+    <label class="lbl">User profile <small class="muted">(Lakebase user profile store)</small></label>
+    <select id="persona"></select>
+    <div class="persona-card" id="personaCard"></div>
+
+    <button class="ghost" id="liveBtn" title="Read the latest weather / live event / transit signals for this user's city from Lakebase">⚡ Pull live context for <span id="liveCity">city</span></button>
+    <div class="live-note" id="liveNote"></div>
+
+    <label class="lbl">Current weather</label>
+    <div class="seg wrap" id="weatherSeg"></div>
+
+    <label class="lbl">Time</label>
+    <div class="seg wrap" id="timeSeg"></div>
+
+    <label class="lbl">User state</label>
+    <div class="seg wrap" id="stateSeg"></div>
+
+    <label class="lbl">Live event</label>
+    <select id="event"></select>
+
+    <label class="lbl">Dynamic phone skin</label>
+    <div class="seg wrap" id="skinSeg"></div>
+
+    <button class="primary" id="genBtn">✨ Generate Ad Experience</button>
+    <div class="presets">
+      <span class="muted">Quick scenarios:</span>
+      <a data-preset="rain">Rain + rush hour + missed train</a>
+      <a data-preset="sunny">Sunny + 8 AM + working out</a>
+      <a data-preset="night">11 PM + home + cricket live</a>
+    </div>
+  </section>
+
+  <!-- ============ PANEL 2: THE GENERATIVE ENGINE ============ -->
+  <section class="panel engine">
+    <h2><span class="num">2</span>The Generative Engine <small id="ctxText"></small></h2>
+    <div class="frames">
+      <div class="frame-col">
+        <div class="frame-title control-t">Control · The Old Way <span>static programmatic banner</span></div>
+        <div class="phone" id="controlPhone">
+          <div class="phone-notch"></div>
+          <div class="app-screen">
+            <div class="app-bar"><span>News Feed</span><span>⋯</span></div>
+            <div class="skel lg"></div><div class="skel"></div><div class="skel sm"></div>
+            <div class="skel lg"></div><div class="skel"></div><div class="skel sm"></div>
+            <div class="skel"></div>
+          </div>
+          <div class="banner" id="banner"></div>
+          <div class="blind-badge" id="blindBadge"></div>
+        </div>
+      </div>
+      <div class="vs">VS</div>
+      <div class="frame-col">
+        <div class="frame-title variant-t">Variant · The Generative Way <span id="variantSub">lock-screen widget</span></div>
+        <div class="phone lock" id="lockPhone">
+          <div class="phone-notch"></div>
+          <div class="ls-layers" id="lsLayers"></div>
+          <div class="ls-content">
+            <div class="ls-top" id="lsTop"></div>
+            <div class="ls-clock" id="lsClock">08:02</div>
+            <div class="ls-date" id="lsDate">Wednesday, 5 November</div>
+            <div class="ls-widgets" id="lsWidgets"></div>
+            <img class="ls-product" id="lsProduct" alt="" />
+            <div class="ls-card" id="lsCard"></div>
+          </div>
+          <div class="ls-glance">glance</div>
+          <div class="gen-overlay" id="genOverlay"><div class="spinner"></div><div id="genStep">Scoring 50 layouts…</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="trace" id="trace"></div>
+
+    <div class="engine-detail">
+      <div class="card">
+        <h3>Mock inference pipeline · 10 layout themes scored <small id="modelSrc"></small></h3>
+        <div id="leaderboard" class="leaderboard"></div>
+        <div class="why" id="why"></div>
+      </div>
+      <div class="card">
+        <h3>Latent-space matching · Vector Search brand registry</h3>
+        <div id="matches"></div>
+        <div id="guard" class="guard"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PANEL 3: EFFECTIVENESS DASHBOARD ============ -->
+  <section class="panel dash">
+    <h2><span class="num">3</span>Effectiveness Dashboard <small>live, per simulation</small></h2>
+    <div class="gauges">
+      <div class="gauge-wrap"><div id="gStatic"></div><div class="glbl">Static banner</div></div>
+      <div class="gauge-title">Predicted Attention Score<br><small>proxy for ad blindness</small></div>
+      <div class="gauge-wrap"><div id="gGen"></div><div class="glbl">Generative</div></div>
+    </div>
+    <div class="kpis" id="kpis"></div>
+
+    <div class="card">
+      <h3>ROI lift simulation <small>projected 30-day earnings</small></h3>
+      <div class="slider-row"><span>Daily lock-screen impressions</span><input type="range" id="impr" min="1" max="50" value="10" /><b id="imprVal">10M</b></div>
+      <div id="roiChart"></div>
+      <div class="roi-sum" id="roiSum"></div>
+    </div>
+
+    <div class="card">
+      <h3>Historical proof · 60 days of ad-server logs <small>metric view <code>gold.mv_ad_effectiveness</code></small></h3>
+      <div id="hist"></div>
+      <div id="policy"></div>
+    </div>
+
+    <div class="card">
+      <h3>Decision log <small>written to Lakebase → Lakehouse Sync → Delta</small></h3>
+      <div id="decisions"></div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ GENIE CHAT ============ -->
+<button class="genie-fab" id="genieFab">💬 Ask Genie</button>
+<aside class="genie" id="genie">
+  <div class="genie-head"><b>Genie</b> · ad analytics agent <small>metric views + gold tables</small><button id="genieClose">✕</button></div>
+  <div class="genie-body" id="genieBody">
+    <div class="genie-hint">Ask anything about the ad logs. Try:
+      <a>What is the CTR lift of generative vs static banner by brand?</a>
+      <a>Which layout theme has the highest CTR in heavy rain?</a>
+      <a>Show weekly eCPM for traditional vs generative</a>
+      <a>Which segment has the biggest reduction in opt-out rate?</a>
+    </div>
+  </div>
+  <form class="genie-input" id="genieForm"><input id="genieQ" placeholder="Ask about CTR, eCPM, dwell, opt-outs…" autocomplete="off" /><button>Send</button></form>
+</aside>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

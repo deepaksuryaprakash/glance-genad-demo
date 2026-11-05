@@ -1,0 +1,29 @@
+resources:
+  jobs:
+    glance_datagen:
+      name: "Glance GenAd - 01 Generate historical ad-server logs"
+      description: Backfills 60 days of synthetic impression logs (static vs video vs generative) into the raw landing volume.
+      environments:
+        - environment_key: default
+          spec:
+            environment_version: "3"
+      parameters:
+        - name: mode
+          default: backfill
+        - name: days
+          default: "60"
+        - name: per_day
+          default: "10000"
+      tasks:
+        - task_key: generate_logs
+          environment_key: default
+          spark_python_task:
+            python_file: ../src/jobs/generate_ad_logs.py
+            parameters:
+              - ${workspace.file_path}/src/config/taxonomy.json
+              - /Volumes/${var.catalog}/raw/ad_logs/impressions
+              - "{{job.parameters.days}}"
+              - "{{job.parameters.per_day}}"
+              - "{{job.parameters.mode}}"
+      tags:
+        demo: glance_genad

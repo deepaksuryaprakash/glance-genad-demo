@@ -1,0 +1,27 @@
+bundle:
+  name: glance_genad
+
+include:
+  - resources/*.yml
+
+variables:
+  catalog:
+    default: glance_genad
+  warehouse_id:
+    description: Serverless SQL warehouse (app analytics, Genie, metric views)
+    default: e55438f8a8ce03e0
+  lakebase_project:
+    default: glance-genad
+  lakebase_branch:
+    default: production
+  lakebase_database:
+    default: databricks-postgres
+  genie_space_id:
+    default: 01f1d92ae6a017b1be3392302a894002
+
+targets:
+  fevm:
+    default: true
+    workspace:
+      host: https://fe-sandbox-serverless-sandbox-8bg9w4.cloud.databricks.com
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}

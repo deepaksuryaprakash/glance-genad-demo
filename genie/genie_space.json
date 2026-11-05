@@ -1,0 +1,114 @@
+{
+ "version": 2,
+ "config": {
+  "sample_questions": [
+   {
+    "id": "a0000000000000000000000000000001",
+    "question": [
+     "What is the CTR lift of generative vs static banner by brand?"
+    ]
+   },
+   {
+    "id": "a0000000000000000000000000000002",
+    "question": [
+     "Which layout theme has the highest CTR in heavy rain for Starbucks?"
+    ]
+   },
+   {
+    "id": "a0000000000000000000000000000003",
+    "question": [
+     "Show weekly eCPM for traditional vs generative ads"
+    ]
+   },
+   {
+    "id": "a0000000000000000000000000000004",
+    "question": [
+     "Which user segment has the biggest reduction in opt-out rate with generative ads?"
+    ]
+   },
+   {
+    "id": "a0000000000000000000000000000005",
+    "question": [
+     "What is the average interaction duration by ad format?"
+    ]
+   },
+   {
+    "id": "a0000000000000000000000000000006",
+    "question": [
+     "How many generative ad decisions were made in the app today and what was the average predicted eCPM lift?"
+    ]
+   }
+  ]
+ },
+ "data_sources": {
+  "metric_views": [
+   {
+    "identifier": "glance_genad.gold.mv_ad_effectiveness"
+   },
+   {
+    "identifier": "glance_genad.gold.mv_live_simulations"
+   }
+  ],
+  "tables": [
+   {
+    "identifier": "glance_genad.gold.agg_theme_context_ctr"
+   },
+   {
+    "identifier": "glance_genad.gold.format_lift_summary"
+   },
+   {
+    "identifier": "glance_genad.gold.live_context_latest"
+   },
+   {
+    "identifier": "glance_genad.gold.model_policy_evaluation"
+   }
+  ]
+ },
+ "instructions": {
+  "text_instructions": [
+   {
+    "id": "b0000000000000000000000000000001",
+    "content": [
+     "You are the ad analytics agent for Glance (InMobi) lock-screen advertising. The business problem is attention friction and ad blindness: static banners and programmatic video get tuned out; Glance generative ads adapt the creative layout to the user's live context (weather, time, user state, live events, phone skin).\n",
+     "For ad effectiveness KPIs (impressions, CTR, interaction duration/dwell, engaged view rate, eCPM, cost per engagement, opt-out/churn rate, uninstalls) ALWAYS query the metric view glance_genad.gold.mv_ad_effectiveness using MEASURE(<measure>) with GROUP BY on dimensions.\n",
+     "ad_format values: static_banner (traditional control banner), standard_video (programmatic video), glance_generative (generative contextual lock-screen ad). experience_group is 'Traditional (control)' or 'Generative (variant)'. 'Lift' means (generative / static_banner) - 1 unless the user says otherwise. Present rates as percentages.\n",
+     "Business targets: average active interaction duration > 2.5 seconds, eCPM lift +50-75%, ad-related opt-outs/uninstalls reduced 15-20%.\n",
+     "For decisions made live in the demo app (simulations) use glance_genad.gold.mv_live_simulations. For the model's off-policy evaluation of the optimized generative engine (predicted lift of picking the best of 50 layout x angle combos) use glance_genad.gold.model_policy_evaluation. For pre-computed lift per brand use glance_genad.gold.format_lift_summary. Theme-by-context historical CTR evidence is in glance_genad.gold.agg_theme_context_ctr. Current live weather/events per city are in glance_genad.gold.live_context_latest.\n",
+     "Weather values: sunny, cloudy, heavy_rain, cold, hot_humid. time_slot: morning_rush (8 AM rush hour), midday, evening, late_night (11 PM). user_state: just_missed_train, relaxing_at_home, commuting, working_out, at_office. Brands: nike, starbucks."
+    ]
+   }
+  ],
+  "example_question_sqls": [
+   {
+    "id": "c0000000000000000000000000000001",
+    "question": [
+     "What is the CTR lift of generative vs static banner by brand?"
+    ],
+    "sql": [
+     "WITH f AS (SELECT brand, ad_format, MEASURE(ctr) AS ctr FROM glance_genad.gold.mv_ad_effectiveness GROUP BY ALL)\n",
+     "SELECT g.brand, s.ctr AS static_ctr, g.ctr AS generative_ctr, g.ctr / s.ctr - 1 AS ctr_lift\n",
+     "FROM f g JOIN f s ON g.brand = s.brand AND s.ad_format = 'static_banner' WHERE g.ad_format = 'glance_generative' ORDER BY g.brand"
+    ]
+   },
+   {
+    "id": "c0000000000000000000000000000002",
+    "question": [
+     "Show weekly eCPM for traditional vs generative ads"
+    ],
+    "sql": [
+     "SELECT event_week, experience_group, MEASURE(ecpm_usd) AS ecpm_usd FROM glance_genad.gold.mv_ad_effectiveness GROUP BY ALL ORDER BY event_week, experience_group"
+    ]
+   },
+   {
+    "id": "c0000000000000000000000000000003",
+    "question": [
+     "Which layout theme has the highest CTR in heavy rain?"
+    ],
+    "sql": [
+     "SELECT layout_theme, MEASURE(impressions) AS impressions, MEASURE(ctr) AS ctr, MEASURE(avg_interaction_duration_s) AS avg_dwell_s\n",
+     "FROM glance_genad.gold.mv_ad_effectiveness WHERE ad_format = 'glance_generative' AND weather = 'heavy_rain' GROUP BY ALL ORDER BY ctr DESC"
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,24 @@
+resources:
+  jobs:
+    glance_ml_training:
+      name: "Glance GenAd - 02 Train engagement models (CTR / dwell / opt-out)"
+      description: Trains LR CTR + dwell + opt-out models on gold logs, registers to UC, exports weights, runs off-policy evaluation.
+      environments:
+        - environment_key: ml
+          spec:
+            environment_version: "3"
+            dependencies:
+              - scikit-learn>=1.4
+              - mlflow>=3.1
+              - scipy
+      tasks:
+        - task_key: train_models
+          environment_key: ml
+          spark_python_task:
+            python_file: ../src/jobs/train_models.py
+            parameters:
+              - ${workspace.file_path}/src
+              - ${var.catalog}
+              - ${workspace.file_path}/src/config/taxonomy.json
+      tags:
+        demo: glance_genad

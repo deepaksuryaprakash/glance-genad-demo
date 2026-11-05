@@ -1,0 +1,55 @@
+resources:
+  jobs:
+    glance_context_stream:
+      name: "Glance GenAd - 00 Mock live context stream -> Lakebase"
+      description: Streams mock weather / live match / transit signals into the Lakebase context DB for N minutes.
+      environments:
+        - environment_key: stream
+          spec:
+            environment_version: "3"
+            dependencies:
+              - psycopg[binary]>=3.2
+              - databricks-sdk>=0.81.0
+      parameters:
+        - name: minutes
+          default: "5"
+        - name: interval_seconds
+          default: "5"
+      tasks:
+        - task_key: stream_context
+          environment_key: stream
+          spark_python_task:
+            python_file: ../src/jobs/context_stream.py
+            parameters: ["{{job.parameters.minutes}}", "{{job.parameters.interval_seconds}}"]
+      tags:
+        demo: glance_genad
+
+    glance_refresh:
+      name: "Glance GenAd - 03 Refresh: new ad logs -> pipeline -> VS registry"
+      description: Lands today's ad-server logs, refreshes the medallion pipeline (incl. Lakebase CDC), re-syncs the brand registry index.
+      environments:
+        - environment_key: default
+          spec:
+            environment_version: "3"
+      tasks:
+        - task_key: land_todays_logs
+          run_job_task:
+            job_id: ${resources.jobs.glance_datagen.id}
+            job_parameters:
+              mode: today
+              days: "1"
+              per_day: "2000"
+        - task_key: refresh_pipeline
+          depends_on: [{task_key: land_todays_logs}]
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.glance_pipeline.id}
+        - task_key: refresh_vector_registry
+          depends_on: [{task_key: refresh_pipeline}]
+          environment_key: default
+          spark_python_task:
+            python_file: ../src/jobs/refresh_vector_registry.py
+            parameters:
+              - ${workspace.file_path}/src/sql/02_vector_registry.sql
+              - ${var.catalog}.gold.brand_asset_registry_index
+      tags:
+        demo: glance_genad

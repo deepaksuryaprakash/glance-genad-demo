@@ -1,0 +1,68 @@
+{
+  "brands": {
+    "nike": {
+      "display": "Nike", "cpc_usd": 0.42, "primary": "#111111", "accent": "#FA5400",
+      "allowed_palette": ["#111111", "#FFFFFF", "#FA5400", "#6E6E6E", "#1E3A8A"],
+      "forbidden": "Never recolor the swoosh or product (no neon pink / fluorescent re-tints); no discount-led messaging on premium lines.",
+      "blocked_themes": ["bold_neon"], "blocked_angles": ["discount"],
+      "tone": "Confident, motivational, athlete-first. Short imperative sentences.",
+      "banned_phrases": ["cheap", "cheapest", "guaranteed", "miracle", "lose weight fast"],
+      "baseline_copy": {"headline": "Shop Nike Running Shoes", "body": "New season styles. 10% off.", "cta": "Buy Now"},
+      "hero_product": "Pegasus Trail 5 GORE-TEX"
+    },
+    "starbucks": {
+      "display": "Starbucks", "cpc_usd": 0.28, "primary": "#00704A", "accent": "#CBA258",
+      "allowed_palette": ["#00704A", "#1E3932", "#FFFFFF", "#CBA258", "#D4E9E2"],
+      "forbidden": "No aggressive or high-intensity sports imagery; no altered logo colors; no health claims about coffee.",
+      "blocked_themes": ["energetic_sport"], "blocked_angles": [],
+      "tone": "Warm, welcoming, everyday ritual. Conversational.",
+      "banned_phrases": ["cheap", "healthy", "cure", "guaranteed", "energy drink"],
+      "baseline_copy": {"headline": "Buy Coffee Now", "body": "10% off your next order.", "cta": "Order"},
+      "hero_product": "Caffe Latte"
+    }
+  },
+  "segments": {
+    "fitness_enthusiast": "Fitness Enthusiast",
+    "casual_gamer": "Casual Gamer",
+    "tech_professional": "Tech Professional",
+    "daily_commuter": "Daily Commuter",
+    "night_owl": "Night Owl Streamer"
+  },
+  "weather": {
+    "sunny": "Sunny", "cloudy": "Cloudy", "heavy_rain": "Heavy Rain", "cold": "Cold Snap", "hot_humid": "Hot & Humid"
+  },
+  "time_slot": {
+    "morning_rush": "8 AM Rush Hour", "midday": "1 PM Midday", "evening": "7 PM Evening", "late_night": "11 PM Night"
+  },
+  "user_state": {
+    "just_missed_train": "Just missed a train", "relaxing_at_home": "Relaxing at home",
+    "commuting": "Commuting", "working_out": "Working out", "at_office": "At the office"
+  },
+  "live_event": {
+    "none": "No live event", "cricket_live": "Live Cricket: IND vs AUS", "football_live": "Live Football: Mumbai City vs Bengaluru FC",
+    "city_marathon": "City Marathon Weekend", "esports_final": "Esports Final (BGMI)"
+  },
+  "phone_skin": {
+    "dark_minimal": "Dark Minimal", "vibrant_neon": "Vibrant Neon", "pastel_soft": "Pastel Soft", "nature_green": "Nature Green"
+  },
+  "ad_formats": {
+    "static_banner": "Static Banner (control)", "standard_video": "Standard Programmatic Video", "glance_generative": "Glance Generative Lock-screen"
+  },
+  "themes": {
+    "cozy_warm":       {"label": "Cozy / Warm",        "desc": "warm amber light, steam, soft blankets, comforting"},
+    "rain_atmos":      {"label": "Rain Atmosphere",    "desc": "moody rain streaks, wet reflections, cool blue tones"},
+    "sunrise_fresh":   {"label": "Sunrise Fresh",      "desc": "bright morning sun, fresh start, golden light"},
+    "energetic_sport": {"label": "Energetic Sport",    "desc": "dynamic motion lines, sweat, high-intensity training"},
+    "live_match_hype": {"label": "Live Match Hype",    "desc": "stadium floodlights, live scoreboard, fan energy"},
+    "urban_commute":   {"label": "Urban Commute",      "desc": "metro station, city transit, on-the-go speed"},
+    "minimal_tech":    {"label": "Minimal Tech",       "desc": "clean grid, monochrome, productivity, focus"},
+    "night_calm":      {"label": "Night Calm",         "desc": "deep indigo sky, stars, quiet late-night wind-down"},
+    "chill_lounge":    {"label": "Chill Lounge",       "desc": "relaxed couch vibe, pastel evening glow"},
+    "bold_neon":       {"label": "Bold Neon",          "desc": "fluorescent neon pink and cyan, gamer RGB glow"}
+  },
+  "angles": {
+    "time_saving": "Time-saving", "comfort": "Comfort", "performance": "Performance", "social_fomo": "Social / FOMO", "discount": "Discount"
+  },
+  "cities": ["Bengaluru", "Mumbai", "Delhi", "Hyderabad", "Pune", "Jakarta"],
+  "pricing": {"cpe_usd": 0.002, "engaged_dwell_ms": 2500, "cpm_floor_usd": 1.2}
+}

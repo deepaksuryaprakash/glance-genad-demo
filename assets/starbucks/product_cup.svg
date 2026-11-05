@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 300">
+  <defs><linearGradient id="cup" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e9e4dc"/><stop offset=".5" stop-color="#ffffff"/><stop offset="1" stop-color="#d9d2c6"/></linearGradient></defs>
+  <ellipse cx="110" cy="288" rx="70" ry="8" fill="#000" opacity=".25"/>
+  <g class="steam" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" opacity=".75">
+    <path d="M85 40 C 70 25, 100 15, 85 0"/><path d="M110 45 C 95 28, 125 18, 110 2"/><path d="M135 40 C 120 25, 150 15, 135 0"/>
+  </g>
+  <rect x="42" y="58" width="136" height="22" rx="6" fill="#1E3932"/>
+  <path d="M48 80 L 172 80 L 160 282 C 159 286, 156 288, 152 288 L 68 288 C 64 288, 61 286, 60 282 Z" fill="url(#cup)"/>
+  <path d="M55 140 L 165 140 L 161 210 L 59 210 Z" fill="#CBA258" opacity=".9"/>
+  <circle cx="110" cy="175" r="30" fill="#00704A"/>
+  <circle cx="110" cy="175" r="23" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+  <text x="110" y="181" text-anchor="middle" font-family="Georgia,serif" font-size="17" font-weight="bold" fill="#fff">SB</text>
+</svg>
