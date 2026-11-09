@@ -5,6 +5,16 @@ This demo is for InMobi/Glance. It takes live context (weather, time, user state
 Workspace: `fe-sandbox-serverless-sandbox-8bg9w4` (CLI profile `fevm-biocon`). Bundle target: `fevm`.
 App: https://glance-genad-7474647312316070.aws.databricksapps.com
 
+## Execution evidence (text, from the running build)
+See [`evidence/`](evidence/README.md), captured by `scripts/collect_evidence.py`:
+- [SQL query results](evidence/01_query_results.md): medallion row counts, control-vs-variant KPIs, metric view queries, off-policy evaluation, learned weights, PII masks and row filters in effect
+- [Job run logs](evidence/02_job_runs.md): datagen, training (metrics + policy table), context stream, refresh orchestration
+- [Pipeline runs](evidence/03_pipeline_runs.md): updates, flow completions, data-quality expectation pass/fail counts
+- [MLflow + UC model registry](evidence/04_mlflow_models.md): run metrics/params, model versions 1-7
+- [Platform status](evidence/05_platform_status.md): Lakebase row counts (psql), Lakehouse Sync, synced table, Vector Search status + query result, App
+- [Live app API responses](evidence/06_app_api_responses.md): real `/api/generate` output (scored leaderboard, VS match, guardrail rejections, LLM copy, timings)
+- [Genie transcript](evidence/07_genie_transcript.md): questions, generated SQL, result rows
+
 ## Architecture
 
 ```
