@@ -232,7 +232,7 @@ async function refreshDecisions() {
 // ------------------------------------------------------------------ genie
 function addMsg(cls, html) { const d = document.createElement("div"); d.className = "msg " + cls; d.innerHTML = html; $("#genieBody").appendChild(d); $("#genieBody").scrollTop = 1e9; return d; }
 async function askGenie(q) {
-  addMsg("u", q); const pending = addMsg("a", "Genie is thinking… (writing SQL over the metric views)");
+  addMsg("u", q); const pending = addMsg("a", "Genie is thinking…");
   try {
     const r = await api("/api/genie", { question: q, conversation_id: GENIE_CONV });
     if (r.conversation_id) GENIE_CONV = r.conversation_id;
