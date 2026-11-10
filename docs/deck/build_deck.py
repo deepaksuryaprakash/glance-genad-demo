@@ -302,47 +302,62 @@ for i, (v, l) in enumerate([("+102%", "predicted CTR"), ("+105%", "predicted eCP
     box(p, x, 5.55, 1.7, 0.5, l, fs=11, color=GRAY, align="CENTER")
 box(p, 6.85, 6.35, 5.4, 0.35, "vs. the static ‘Buy Coffee Now. 10% off.’ banner shown to the same user", fs=10, color=GRAY)
 
-# 6. Architecture
-p = content_slide("Architecture: one governed platform from live signal to creative",
-                  "Transactional, streaming, ML, GenAI and BI on the Databricks Data Intelligence Platform, all under Unity Catalog")
+# 6. Architecture: what is served from Lakebase vs the Lakehouse
+p = content_slide("Architecture: Lakebase serves the moment, Lakehouse the intelligence",
+                  "Two serving layers on one platform, kept in sync automatically and governed by Unity Catalog")
+LB, LH = BLUE, NAVY
 # sources
-src = ["Live context streams\nweather · sports · transit", "Ad-server logs\nimpressions · clicks · dwell",
-       "User profile store\nbehavioral vectors (PII)", "Creative asset bucket\nproduct shots · logos · copy"]
-for i, s in enumerate(src):
-    box(p, 0.82, 2.0 + i * 1.0, 2.1, 0.85, s, fill=OAT, outline=OAT2, fs=10, valign="MIDDLE", align="CENTER")
-box(p, 0.82, 1.7, 2.1, 0.3, "SOURCES", fs=9, bold=True, color=GRAY)
-# lakebase
-box(p, 3.3, 1.7, 2.5, 0.3, "OPERATE", fs=9, bold=True, color=GRAY)
-box(p, 3.3, 2.0, 2.5, 1.85, fill=BLUE, color=WHITE, fs=10, inset=0.14, rich=[
-    ("Lakebase (Postgres)\n", {"bold": True, "fs": 13}),
-    ("Context DB + app backend: profiles, live signals, asset registry, every ad decision; model weights served in ms", {})])
-box(p, 3.3, 4.05, 2.5, 1.75, fill=OAT, outline=BLUE, fs=10, inset=0.14, rich=[
-    ("Lakehouse Sync (CDC)\n", {"bold": True, "fs": 12}), ("Lakebase → Delta, continuously\n\n", {}),
-    ("Synced tables\n", {"bold": True, "fs": 12}), ("Delta → Lakebase (model weights)", {})])
-# lakeflow medallion
-box(p, 6.2, 1.7, 3.2, 0.3, "ENGINEER & LEARN", fs=9, bold=True, color=GRAY)
-box(p, 6.2, 2.0, 3.2, 1.35, fill=NAVY, color=WHITE, fs=10, inset=0.14, rich=[
-    ("Lakeflow Declarative Pipelines\n", {"bold": True, "fs": 12}), ("Bronze → Silver → Gold Delta tables · Auto Loader · "
-                                                                    "AUTO CDC · data-quality expectations", {})])
-box(p, 6.2, 3.5, 1.55, 1.15, fill=OAT, outline=OAT2, fs=10, inset=0.1, rich=[("MLflow + UC models\n", {"bold": True}), ("CTR · dwell · opt-out", {})])
-box(p, 7.85, 3.5, 1.55, 1.15, fill=OAT, outline=OAT2, fs=10, inset=0.1, rich=[("Vector Search\n", {"bold": True}), ("brand-safe asset registry", {})])
-box(p, 6.2, 4.8, 1.55, 1.0, fill=OAT, outline=OAT2, fs=10, inset=0.1, rich=[("Metric views\n", {"bold": True}), ("governed KPIs", {})])
-box(p, 7.85, 4.8, 1.55, 1.0, fill=OAT, outline=OAT2, fs=10, inset=0.1, rich=[("Foundation models\n", {"bold": True}), ("LLM copy · embeddings", {})])
-# experience
-box(p, 9.8, 1.7, 2.68, 0.3, "EXPERIENCE", fs=9, bold=True, color=GRAY)
-box(p, 9.8, 2.0, 2.68, 2.1, fill=LAVA, color=WHITE, fs=10, inset=0.14, rich=[
-    ("Databricks App\n", {"bold": True, "fs": 13}), ("Simulation controls · generative engine (static vs. generative) · "
-                                                    "live effectiveness dashboard", {})])
-box(p, 9.8, 4.25, 2.68, 1.55, fill=OAT, outline=LAVA, fs=10, inset=0.14, rich=[
-    ("Genie agent\n", {"bold": True, "fs": 12}), ("Plain-English questions over the metric views, inside the app", {})])
+box(p, 0.82, 1.7, 1.9, 0.3, "SOURCES", fs=9, bold=True, color=GRAY)
+for i, (s_, dest, col) in enumerate([("Live context streams\nweather · sports · transit", "→ Lakebase", LB),
+                                     ("User profile store\nbehavioral vectors (PII)", "→ Lakebase", LB),
+                                     ("Ad-server logs\nimpressions · clicks · dwell", "→ Lakehouse", LH),
+                                     ("Creative asset bucket\nproduct shots · logos · copy", "→ Lakehouse", LH)]):
+    y = 2.0 + i * 0.98
+    box(p, 0.82, y, 1.9, 0.86, fill=OAT, outline=OAT2, fs=9.5, align="CENTER", valign="MIDDLE", rich=[
+        (s_ + "\n", {}), (dest, {"bold": True, "color": col})])
+box(p, 2.76, 3.65, 0.26, 0.5, shape="RIGHT_ARROW", fill=GRAY)
+# app (consumer of both layers)
+box(p, 3.08, 1.7, 9.4, 0.3, "EXPERIENCE", fs=9, bold=True, color=GRAY)
+box(p, 3.08, 2.0, 9.4, 0.95, fill=LAVA)
+box(p, 3.25, 2.05, 2.6, 0.85, "Databricks App\n+ Genie agent", fs=13, bold=True, color=WHITE, valign="MIDDLE")
+box(p, 5.9, 2.08, 3.15, 0.8, fs=10, color=WHITE, valign="MIDDLE", rich=[
+    ("Per-unlock hot path (from Lakebase)\n", {"bold": True}), ("profile → live context → score 50 layouts → log decision", {})])
+box(p, 9.15, 2.08, 3.25, 0.8, fs=10, color=WHITE, valign="MIDDLE", rich=[
+    ("Enrichment & insight (from Lakehouse)\n", {"bold": True}), ("asset match · creatives · KPI history · Genie answers", {})])
+box(p, 4.2, 2.99, 0.3, 0.32, shape="UP_ARROW", fill=LB)
+box(p, 4.55, 2.99, 0.3, 0.32, shape="DOWN_ARROW", fill=LB)
+box(p, 4.9, 3.0, 1.7, 0.3, "~4 ms read · ~8 ms write", fs=9, bold=True, color=LB, valign="MIDDLE")
+box(p, 10.15, 3.0, 0.4, 0.3, shape="UP_ARROW", fill=LH)
+box(p, 10.6, 3.0, 1.9, 0.3, "~0.3–0.5 s · cached SQL", fs=9, bold=True, color=LH, valign="MIDDLE")
+# Lakebase lane
+box(p, 3.08, 3.35, 3.95, 2.5, fill=LB)
+box(p, 3.25, 3.42, 3.7, 0.55, fs=10, color=WHITE, rich=[("LAKEBASE  ", {"bold": True, "fs": 14}),
+                                                      ("real-time serving · Postgres OLTP", {"color": "#D6E6F5"})])
+box(p, 3.25, 3.95, 3.7, 1.9, fs=10.5, color=WHITE, rich=[
+    ("• User profile + behavioral vector lookup\n", {}), ("• Latest live context per city\n", {}),
+    ("• Model weights for in-app scoring (synced)\n", {}), ("• Every ad decision written back + live log\n", {}),
+    ("• Personas, asset index, brand registry (system of record)", {})])
+# sync lane
+box(p, 7.12, 3.62, 1.3, 0.42, shape="RIGHT_ARROW", fill=GREEN)
+box(p, 7.05, 4.05, 1.45, 0.62, fs=8.5, align="CENTER", rich=[("Lakehouse Sync (CDC)\n", {"bold": True, "color": GREEN}),
+                                                            ("decisions · profiles · signals → Delta, continuous", {"color": GRAY})])
+box(p, 7.12, 4.75, 1.3, 0.42, shape="LEFT_ARROW", fill=YELLOW)
+box(p, 7.05, 5.18, 1.45, 0.62, fs=8.5, align="CENTER", rich=[("Synced table\n", {"bold": True, "color": "#B37800"}),
+                                                            ("model weights → Postgres on every retrain", {"color": GRAY})])
+# Lakehouse lane
+box(p, 8.53, 3.35, 3.95, 2.5, fill=LH)
+box(p, 8.7, 3.42, 3.7, 0.55, fs=10, color=WHITE, rich=[("LAKEHOUSE  ", {"bold": True, "fs": 14}),
+                                                     ("analytics & AI · Delta + UC", {"color": "#C5CED2"})])
+box(p, 8.7, 3.95, 3.7, 1.9, fs=10.5, color=WHITE, rich=[
+    ("• Vector Search over the brand asset registry\n", {}), ("• Creative assets from UC Volumes\n", {}),
+    ("• Metric views → KPI history + Genie answers\n", {}), ("• Lakeflow medallion: 600k logs + CDC → gold\n", {}),
+    ("• Training data → MLflow / UC models", {})])
 # governance band
-box(p, 0.82, 6.0, 11.66, 0.75, fill=NAVY, color=WHITE, fs=11, valign="MIDDLE", align="CENTER", rich=[
-    ("Unity Catalog  ", {"bold": True, "color": YELLOW, "fs": 13}),
-    ("advertiser row-level security · PII column masks · end-to-end lineage · model registry · access control", {})])
-for ax in (2.96, 5.84, 9.44):
-    box(p, ax, 3.55, 0.32, 0.5, shape="RIGHT_ARROW", fill=GRAY)
-box(p, 4.33, 3.87, 0.44, 0.17, shape="DOWN_ARROW", fill=GRAY)
-footnote(p, "Built and running end to end in a Databricks workspace; code and execution evidence: github.com/deepaksuryaprakash/glance-genad-demo")
+box(p, 0.82, 6.0, 11.66, 0.72, fill=OAT, outline=OAT2, fs=11, valign="MIDDLE", align="CENTER", rich=[
+    ("Unity Catalog  ", {"bold": True, "color": LAVA, "fs": 13}),
+    ("governs both layers: advertiser row-level security · PII column masks · lineage · model registry · access control", {})])
+footnote(p, "Rule of thumb: Lakebase answers ‘what is true for this user right now?’ in ms. The Lakehouse answers ‘what works, and why?’ "
+            "across all history. LLM copy + embeddings: Foundation Model API.")
 
 # 7. Solution in detail: inside one decision
 p = content_slide("Inside one decision: from context to brand-safe creative in a single request",

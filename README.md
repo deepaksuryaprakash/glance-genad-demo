@@ -56,6 +56,25 @@ See [`evidence/`](evidence/README.md), captured by `scripts/collect_evidence.py`
 * **Ad Relevance Score** = 55% embedding similarity (context ↔ matched component, vs the generic baseline copy for static) + 45% learned theme/angle fit
 * Predicted CTR lift, eCPM impact, average interaction duration (target > 2.5s), cost per engagement, opt-out reduction (target −15–20%), and a 30-day ROI projection with an impressions slider.
 
+## What is served from Lakebase vs. the Lakehouse
+**Rule of thumb:** Lakebase answers "what is true for this user right now?" in milliseconds. The Lakehouse answers "what works, and why?" across all history, and does the AI enrichment.
+
+| Served from | What | How the app reads it | Latency |
+|---|---|---|---|
+| **Lakebase** (Postgres OLTP) | User profile + behavioral vector for the request | `glance_ops.user_profiles` point lookup | ~4 ms |
+| Lakebase | Latest live context per city (weather, match score, transit) | `glance_ops.context_signals` (DISTINCT ON latest) | ms |
+| Lakebase | Model weights used to score 50 layouts in-process | `glance_serving.model_coefficients` (synced table from UC), loaded at startup / reload | <2 ms scoring |
+| Lakebase | Every ad decision (write) + live decision log and stats | `glance_ops.ad_decisions` insert / select | ~8 ms write |
+| Lakebase | Personas, creative-asset index, brand component registry (system of record) | `glance_ops.*` | ms |
+| **Lakehouse** (Delta + UC) | Brand-safe asset matching | Vector Search index on `gold.brand_asset_registry` | ~0.3–0.5 s |
+| Lakehouse | Creative files (product shots, logos) | UC Volume `raw.creative_assets` via Files API (cached) | first load only |
+| Lakehouse | Historical KPI scorecard + off-policy evaluation on the dashboard | metric view `gold.mv_ad_effectiveness`, `gold.model_policy_evaluation` via SQL warehouse (5-min cache) | seconds, cached |
+| Lakehouse | Genie answers | Genie space over metric views + gold tables | seconds |
+| Lakehouse | Training data, model registry | `gold.fact_ad_impressions` → MLflow / UC model | batch |
+| Model Serving (FMAPI) | LLM copy + embeddings | `databricks-claude-haiku-5-5`, `databricks-gte-large-en` | ~3 s / ~0.4 s |
+
+**Sync between the layers:** Lakehouse Sync (CDC) streams every Lakebase change (decisions, profiles, signals, registry) into `bronze.lb_*_history` Delta tables continuously. A Lakebase **synced table** pushes `ml.model_coefficients` from UC back into Postgres on every retrain (the training job MERGEs, so CDF carries the change).
+
 ## Unity Catalog governance
 * `governance.brand_row_filter` on silver/gold impressions: advertiser analysts only see their own brand (`governance.brand_entitlements`; `*` = platform team). The app SP and the demo owner are entitled to `*`.
 * PII masks on `silver.silver_user_profiles` (`full_name`, `email`, `phone`, `device_ad_id` → pseudonymised hash). Only the account group `glance_pii_readers` sees raw values.
