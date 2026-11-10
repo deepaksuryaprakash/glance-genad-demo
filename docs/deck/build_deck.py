@@ -182,6 +182,31 @@ REQ.append({"insertText": {"objectId": s1, "text": "Real-time generative lock-sc
 style_text(s1, {"fontSize": {"magnitude": 20, "unit": "PT"}})
 REQ.append({"insertText": {"objectId": s1b, "text": "InMobi × Databricks  |  Solution review  |  November 2026"}})
 
+# 1b. Business problem framing (opens the deck)
+p = content_slide("The business problem: ad fatigue is breaking the mobile ad model",
+                  "Users have learned to ignore ads, and the formats that force attention push them away")
+P_FRAME = p
+box(p, 0.82, 2.0, 4.6, 4.7, fill=NAVY)
+box(p, 1.1, 2.3, 4.1, 1.3, "99%", fs=72, bold=True, color=LAVA)
+box(p, 1.1, 3.65, 4.1, 1.4, "of static banner impressions get less than 2.5 seconds of attention", fs=18, bold=True, color=WHITE)
+box(p, 1.1, 5.2, 4.1, 1.3, "Users scroll past, swipe away or opt out. Every ignored impression is yield the platform never earns.",
+    fs=12, color="#C5CED2")
+rows = [("1", "Users tune out", "Traditional banners and standard programmatic video suffer extreme fatigue; intrusive mobile "
+                                "placements are systematically ignored.", LAVA),
+        ("2", "Drop-offs follow", "Interruptive formats drive bounces, lock-screen opt-outs and app uninstalls, shrinking the "
+                                  "audience the business monetizes.", YELLOW),
+        ("3", "Yield stalls", "Serving more of the same impressions doesn't grow earnings; high-yield impressions have to be "
+                              "earned by relevance, not interruption.", BLUE)]
+for i, (n, h, body, acc) in enumerate(rows):
+    y = 2.0 + i * 1.22
+    box(p, 5.7, y, 0.6, 0.6, n, shape="ELLIPSE", fill=acc, color=WHITE, fs=16, bold=True, align="CENTER", valign="MIDDLE")
+    box(p, 6.5, y - 0.02, 5.98, 0.4, h, fs=15, bold=True)
+    box(p, 6.5, y + 0.38, 5.98, 0.8, body, fs=12, color=GRAY)
+box(p, 5.7, 5.7, 6.78, 1.0, fill=OAT, outline=OAT2, fs=13, valign="MIDDLE", rich=[
+    ("The question for Glance: ", {"bold": True, "color": LAVA}),
+    ("how do we turn the lock screen, the phone's most-viewed surface, into high-yield impressions users welcome "
+     "instead of tune out?", {})])
+
 # 2. Executive summary: lead with the outcome
 p = content_slide("+83% eCPM from the same impressions, with fewer users opting out",
                   "Model-optimized generative lock-screen ads vs. today's static banner (off-policy evaluation, 600k impressions)")
@@ -206,6 +231,7 @@ footnote(p, "Demo build on synthetic ad-server logs; figures are model predictio
 # 3. Business problem
 p = content_slide("Static ads are tuned out, and every ignored impression costs yield and users",
                   "Baseline from 60 days of ad-server logs (600k impressions): the lock screen is monetized like a banner")
+P_PROB = p
 cols = [
     ("Ad blindness", LAVA, "1.09%", "CTR on static banners",
      "Users see the same generic banner regardless of weather, time or what they are doing. Only 0.9% of "
@@ -422,5 +448,7 @@ for i in range(0, len(REQ), 400):
         print("ERROR", r["error"]["message"][:500])
         sys.exit(1)
 g.batch_update(PID, [{"deleteObject": {"objectId": s}} for s in old])
+# deck opens with the business problem: title, problem framing, problem evidence, then the outcome
+g.batch_update(PID, [{"updateSlidesPosition": {"slideObjectIds": [P_FRAME, P_PROB], "insertionIndex": 1}}])
 print("slides:", len(g.get_slide_ids(PID)))
 print(f"https://docs.google.com/presentation/d/{PID}/edit")
