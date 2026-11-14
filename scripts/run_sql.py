@@ -1,7 +1,7 @@
 """Run a .sql file statement-by-statement via the Databricks CLI (no local deps).
 Usage: python3 scripts/run_sql.py <file.sql> <profile> [KEY=VALUE substitutions...]"""
 import os, re, subprocess, sys
-WAREHOUSE = os.getenv("WAREHOUSE_ID", "e55438f8a8ce03e0")
+WAREHOUSE = os.getenv("WAREHOUSE_ID", "2e3fc3596c58e22d")
 path, profile, *subs = sys.argv[1:]
 s = open(path).read()
 for kv in subs:

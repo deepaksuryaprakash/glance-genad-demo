@@ -1,4 +1,4 @@
-# SQL query results (executed 2026-11-09 10:16 UTC on SQL warehouse e55438f8a8ce03e0)
+# SQL query results (executed 2026-11-14 15:38 UTC on SQL warehouse 2e3fc3596c58e22d)
 
 ## Row counts across the medallion (Lakebase CDC bronze -> silver -> gold)
 
@@ -12,13 +12,13 @@ SELECT 'bronze.bronze_ad_impressions' t, count(*) n FROM glance_genad.bronze.bro
 | silver.silver_user_profiles | 20006 |
 | silver.silver_brand_asset_components | 16 |
 | gold.fact_ad_impressions | 602000 |
-| gold.agg_daily_performance | 360170 |
+| gold.agg_daily_performance | 360101 |
 | bronze.bronze_ad_impressions | 602000 |
 | bronze.lb_user_profiles_history (Lakehouse Sync) | 20006 |
-| bronze.lb_context_signals_history (Lakehouse Sync) | 52 |
-| bronze.lb_ad_decisions_history (Lakehouse Sync) | 42 |
-| silver.silver_context_signals | 52 |
-| gold.live_simulation_log | 18 |
+| bronze.lb_context_signals_history (Lakehouse Sync) | 54 |
+| bronze.lb_ad_decisions_history (Lakehouse Sync) | 6 |
+| silver.silver_context_signals | 54 |
+| gold.live_simulation_log | 2 |
 | gold.brand_asset_registry (VS source) | 16 |
 | ml.model_coefficients | 2020 |
 
@@ -30,15 +30,15 @@ SELECT brand, ad_format, impressions, round(ctr*100,3) ctr_pct, round(avg_dwell_
 
 | brand | ad_format | impressions | ctr_pct | avg_dwell_s | engaged_pct | ecpm_usd | cpe_usd | opt_out_pct | ctr_lift_pct | ecpm_lift_pct | opt_out_reduction_pct |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| all | glance_generative | 270295 | 1.333 | 2.62 | 44.5 | 6.67 | 0.015 | 0.881 | 22.2 | 35.3 | 18.9 |
-| all | standard_video | 120981 | 1.257 | 1.61 | 11.4 | 5.72 | 0.046 | 1.299 | 15.2 | 16.0 | -19.6 |
-| all | static_banner | 210724 | 1.091 | 0.95 | 0.9 | 4.93 | 0.257 | 1.086 | 0.0 | 0.0 | 0.0 |
-| nike | glance_generative | 134333 | 1.222 | 2.64 | 44.9 | 7.23 | 0.016 | 0.88 | 29.1 | 39.3 | 22.4 |
-| nike | standard_video | 60239 | 1.107 | 1.61 | 11.4 | 6.08 | 0.05 | 1.268 | 17.0 | 17.1 | -11.9 |
-| nike | static_banner | 105258 | 0.946 | 0.94 | 0.9 | 5.19 | 0.292 | 1.133 | 0.0 | 0.0 | 0.0 |
-| starbucks | glance_generative | 135962 | 1.444 | 2.61 | 44.1 | 6.12 | 0.014 | 0.883 | 16.9 | 31.0 | 15.1 |
-| starbucks | standard_video | 60742 | 1.406 | 1.61 | 11.5 | 5.37 | 0.043 | 1.33 | 13.8 | 14.7 | -28.0 |
-| starbucks | static_banner | 105466 | 1.235 | 0.95 | 0.9 | 4.68 | 0.228 | 1.039 | 0.0 | 0.0 | 0.0 |
+| all | glance_generative | 270311 | 1.329 | 2.62 | 44.5 | 6.66 | 0.015 | 0.882 | 21.7 | 34.7 | 18.8 |
+| all | standard_video | 120980 | 1.263 | 1.61 | 11.4 | 5.74 | 0.046 | 1.302 | 15.6 | 16.2 | -19.8 |
+| all | static_banner | 210709 | 1.093 | 0.95 | 0.9 | 4.94 | 0.258 | 1.086 | 0.0 | 0.0 | 0.0 |
+| nike | glance_generative | 134341 | 1.216 | 2.64 | 44.9 | 7.2 | 0.016 | 0.88 | 27.7 | 38.1 | 22.0 |
+| nike | standard_video | 60262 | 1.115 | 1.61 | 11.4 | 6.11 | 0.05 | 1.264 | 17.2 | 17.2 | -12.1 |
+| nike | static_banner | 105282 | 0.952 | 0.94 | 0.9 | 5.21 | 0.292 | 1.128 | 0.0 | 0.0 | 0.0 |
+| starbucks | glance_generative | 135970 | 1.441 | 2.61 | 44.1 | 6.12 | 0.014 | 0.885 | 16.9 | 31.0 | 15.3 |
+| starbucks | standard_video | 60718 | 1.41 | 1.61 | 11.5 | 5.38 | 0.043 | 1.339 | 14.3 | 15.1 | -28.2 |
+| starbucks | static_banner | 105427 | 1.233 | 0.95 | 0.9 | 4.67 | 0.228 | 1.044 | 0.0 | 0.0 | 0.0 |
 
 ## Off-policy evaluation of the generative engine (gold.model_policy_evaluation, written by the training job)
 
@@ -48,9 +48,9 @@ SELECT policy, round(pred_ctr*100,2) pred_ctr_pct, round(pred_dwell_s,2) pred_dw
 
 | policy | pred_ctr_pct | pred_dwell_s | pred_opt_out_pct | pred_ecpm_usd | ctr_lift_pct | ecpm_lift_pct | opt_out_reduction_pct | model_version | evaluated_at |
 |---|---|---|---|---|---|---|---|---|---|
-| static_banner (control) | 1.1 | 0.94 | 1.098 | 4.96 | 0.0 | 0.0 | 0.0 | 7 | 2026-11-05T15:40:28.446Z |
-| generative - logged policy (rule + exploration) | 1.37 | 2.61 | 0.958 | 6.77 | 23.9 | 36.4 | 12.8 | 7 | 2026-11-05T15:40:28.446Z |
-| generative - optimized (argmax of 50 layout x angle combos) | 1.96 | 3.1 | 0.885 | 9.1 | 77.5 | 83.5 | 19.4 | 7 | 2026-11-05T15:40:28.446Z |
+| static_banner (control) | 1.08 | 0.94 | 1.116 | 4.9 | 0.0 | 0.0 | 0.0 | 1 | 2026-11-14T15:09:04.216Z |
+| generative - logged policy (rule + exploration) | 1.33 | 2.65 | 0.917 | 6.68 | 23.4 | 36.4 | 17.8 | 1 | 2026-11-14T15:09:04.216Z |
+| generative - optimized (argmax of 50 layout x angle combos) | 1.84 | 3.13 | 0.82 | 8.75 | 70.5 | 78.6 | 26.5 | 1 | 2026-11-14T15:09:04.216Z |
 
 ## Metric view query: weekly KPIs, control vs variant (gold.mv_ad_effectiveness)
 
@@ -60,26 +60,24 @@ SELECT event_week, experience_group, MEASURE(impressions) impressions, round(MEA
 
 | event_week | experience_group | impressions | ctr_pct | dwell_s | ecpm_usd | opt_out_pct |
 |---|---|---|---|---|---|---|
-| 2026-08-31T00:00:00.000Z | Generative (variant) | 4484 | 1.271 | 2.57 | 6.49 | 0.959 |
-| 2026-08-31T00:00:00.000Z | Traditional (control) | 5516 | 1.197 | 1.2 | 5.46 | 1.033 |
-| 2026-09-07T00:00:00.000Z | Generative (variant) | 31616 | 1.496 | 2.62 | 7.23 | 0.857 |
-| 2026-09-07T00:00:00.000Z | Traditional (control) | 38384 | 1.248 | 1.19 | 5.54 | 1.232 |
-| 2026-09-14T00:00:00.000Z | Generative (variant) | 31542 | 1.236 | 2.63 | 6.28 | 0.885 |
-| 2026-09-14T00:00:00.000Z | Traditional (control) | 38458 | 1.037 | 1.19 | 4.85 | 1.131 |
-| 2026-09-21T00:00:00.000Z | Generative (variant) | 31304 | 1.291 | 2.62 | 6.56 | 0.907 |
-| 2026-09-21T00:00:00.000Z | Traditional (control) | 38696 | 1.181 | 1.18 | 5.33 | 1.222 |
-| 2026-09-28T00:00:00.000Z | Generative (variant) | 31364 | 1.46 | 2.64 | 7.19 | 0.867 |
-| 2026-09-28T00:00:00.000Z | Traditional (control) | 38636 | 1.121 | 1.19 | 5.09 | 1.188 |
-| 2026-10-05T00:00:00.000Z | Generative (variant) | 31527 | 1.269 | 2.63 | 6.44 | 0.936 |
-| 2026-10-05T00:00:00.000Z | Traditional (control) | 38473 | 1.128 | 1.19 | 5.11 | 1.167 |
-| 2026-10-12T00:00:00.000Z | Generative (variant) | 31430 | 1.336 | 2.66 | 6.7 | 0.827 |
-| 2026-10-12T00:00:00.000Z | Traditional (control) | 38570 | 1.193 | 1.2 | 5.37 | 1.182 |
-| 2026-10-19T00:00:00.000Z | Generative (variant) | 31395 | 1.303 | 2.63 | 6.57 | 0.917 |
-| 2026-10-19T00:00:00.000Z | Traditional (control) | 38605 | 1.114 | 1.18 | 5.08 | 1.14 |
-| 2026-10-26T00:00:00.000Z | Generative (variant) | 31244 | 1.258 | 2.58 | 6.33 | 0.883 |
-| 2026-10-26T00:00:00.000Z | Traditional (control) | 38756 | 1.13 | 1.18 | 5.14 | 1.066 |
-| 2026-11-02T00:00:00.000Z | Generative (variant) | 14389 | 1.39 | 2.61 | 6.94 | 0.792 |
-| 2026-11-02T00:00:00.000Z | Traditional (control) | 17611 | 1.272 | 1.18 | 5.7 | 1.17 |
+| 2026-09-14T00:00:00.000Z | Generative (variant) | 27096 | 1.461 | 2.59 | 7.1 | 0.882 |
+| 2026-09-14T00:00:00.000Z | Traditional (control) | 32904 | 1.258 | 1.19 | 5.61 | 1.216 |
+| 2026-09-21T00:00:00.000Z | Generative (variant) | 31570 | 1.277 | 2.64 | 6.43 | 0.871 |
+| 2026-09-21T00:00:00.000Z | Traditional (control) | 38430 | 1.093 | 1.19 | 5.02 | 1.109 |
+| 2026-09-28T00:00:00.000Z | Generative (variant) | 31302 | 1.319 | 2.64 | 6.66 | 0.901 |
+| 2026-09-28T00:00:00.000Z | Traditional (control) | 38698 | 1.145 | 1.19 | 5.21 | 1.235 |
+| 2026-10-05T00:00:00.000Z | Generative (variant) | 31335 | 1.391 | 2.61 | 6.88 | 0.894 |
+| 2026-10-05T00:00:00.000Z | Traditional (control) | 38665 | 1.138 | 1.19 | 5.18 | 1.197 |
+| 2026-10-12T00:00:00.000Z | Generative (variant) | 31560 | 1.258 | 2.62 | 6.45 | 0.884 |
+| 2026-10-12T00:00:00.000Z | Traditional (control) | 38440 | 1.103 | 1.19 | 5.05 | 1.207 |
+| 2026-10-19T00:00:00.000Z | Generative (variant) | 31454 | 1.361 | 2.67 | 6.8 | 0.868 |
+| 2026-10-19T00:00:00.000Z | Traditional (control) | 38546 | 1.235 | 1.19 | 5.48 | 1.131 |
+| 2026-10-26T00:00:00.000Z | Generative (variant) | 31449 | 1.342 | 2.65 | 6.66 | 0.89 |
+| 2026-10-26T00:00:00.000Z | Traditional (control) | 38551 | 1.113 | 1.19 | 5.07 | 1.188 |
+| 2026-11-02T00:00:00.000Z | Generative (variant) | 31251 | 1.238 | 2.58 | 6.28 | 0.88 |
+| 2026-11-02T00:00:00.000Z | Traditional (control) | 38749 | 1.13 | 1.18 | 5.14 | 1.058 |
+| 2026-11-09T00:00:00.000Z | Generative (variant) | 23294 | 1.335 | 2.61 | 6.74 | 0.867 |
+| 2026-11-09T00:00:00.000Z | Traditional (control) | 28706 | 1.205 | 1.18 | 5.46 | 1.146 |
 
 ## Metric view query: best generative theme per weather (historical evidence the model learns from)
 
@@ -89,56 +87,56 @@ SELECT weather, layout_theme, MEASURE(impressions) impressions, round(MEASURE(ct
 
 | weather | layout_theme | impressions | ctr_pct | dwell_s |
 |---|---|---|---|---|
-| cloudy | chill_lounge | 2457 | 1.384 | 2.59 |
-| cloudy | urban_commute | 2440 | 1.27 | 2.41 |
-| cloudy | energetic_sport | 1233 | 1.217 | 2.67 |
-| cloudy | minimal_tech | 29275 | 1.182 | 2.48 |
-| cloudy | night_calm | 2481 | 1.048 | 2.41 |
-| cloudy | sunrise_fresh | 2495 | 0.962 | 2.37 |
-| cloudy | cozy_warm | 2460 | 0.935 | 2.57 |
+| cloudy | chill_lounge | 2461 | 1.382 | 2.59 |
+| cloudy | urban_commute | 2437 | 1.313 | 2.41 |
+| cloudy | energetic_sport | 1238 | 1.292 | 2.67 |
+| cloudy | minimal_tech | 29278 | 1.165 | 2.48 |
+| cloudy | night_calm | 2484 | 1.006 | 2.41 |
+| cloudy | sunrise_fresh | 2494 | 0.962 | 2.36 |
+| cloudy | cozy_warm | 2459 | 0.935 | 2.57 |
 | cloudy | live_match_hype | 2435 | 0.862 | 2.07 |
-| cloudy | bold_neon | 1186 | 0.843 | 2.47 |
-| cloudy | rain_atmos | 2512 | 0.836 | 2.47 |
-| cold | cozy_warm | 15917 | 2.061 | 3.14 |
-| cold | bold_neon | 662 | 1.662 | 2.41 |
-| cold | minimal_tech | 1359 | 1.619 | 2.57 |
-| cold | sunrise_fresh | 1337 | 1.571 | 2.49 |
-| cold | urban_commute | 1335 | 1.498 | 2.53 |
-| cold | rain_atmos | 1330 | 1.429 | 2.37 |
-| cold | live_match_hype | 1315 | 1.369 | 2.15 |
-| cold | night_calm | 1327 | 1.206 | 2.45 |
-| cold | energetic_sport | 678 | 1.032 | 2.68 |
-| cold | chill_lounge | 1318 | 0.986 | 2.5 |
-| heavy_rain | cozy_warm | 3350 | 1.821 | 3.03 |
-| heavy_rain | rain_atmos | 40710 | 1.609 | 3.12 |
-| heavy_rain | chill_lounge | 3323 | 1.505 | 2.61 |
-| heavy_rain | urban_commute | 3291 | 1.246 | 2.46 |
-| heavy_rain | live_match_hype | 3382 | 1.242 | 2.26 |
-| heavy_rain | energetic_sport | 1654 | 1.209 | 2.7 |
-| heavy_rain | night_calm | 3396 | 1.207 | 2.45 |
-| heavy_rain | minimal_tech | 3433 | 1.165 | 2.55 |
+| cloudy | bold_neon | 1185 | 0.844 | 2.47 |
+| cloudy | rain_atmos | 2513 | 0.836 | 2.47 |
+| cold | cozy_warm | 15835 | 2.052 | 3.14 |
+| cold | bold_neon | 657 | 1.674 | 2.41 |
+| cold | minimal_tech | 1357 | 1.548 | 2.57 |
+| cold | sunrise_fresh | 1331 | 1.503 | 2.49 |
+| cold | urban_commute | 1337 | 1.496 | 2.53 |
+| cold | rain_atmos | 1315 | 1.445 | 2.37 |
+| cold | live_match_hype | 1299 | 1.386 | 2.15 |
+| cold | night_calm | 1314 | 1.218 | 2.45 |
+| cold | energetic_sport | 675 | 1.185 | 2.68 |
+| cold | chill_lounge | 1311 | 0.992 | 2.49 |
+| heavy_rain | cozy_warm | 3346 | 1.823 | 3.02 |
+| heavy_rain | rain_atmos | 40724 | 1.603 | 3.12 |
+| heavy_rain | chill_lounge | 3321 | 1.506 | 2.61 |
+| heavy_rain | urban_commute | 3303 | 1.241 | 2.46 |
+| heavy_rain | live_match_hype | 3388 | 1.24 | 2.25 |
+| heavy_rain | night_calm | 3395 | 1.208 | 2.45 |
+| heavy_rain | energetic_sport | 1661 | 1.204 | 2.7 |
+| heavy_rain | minimal_tech | 3433 | 1.136 | 2.55 |
 | heavy_rain | bold_neon | 1739 | 1.093 | 2.4 |
-| heavy_rain | sunrise_fresh | 3284 | 0.944 | 2.18 |
-| hot_humid | bold_neon | 1121 | 2.052 | 2.41 |
-| hot_humid | energetic_sport | 1106 | 1.356 | 2.7 |
-| hot_humid | night_calm | 2204 | 1.316 | 2.35 |
-| hot_humid | urban_commute | 2262 | 1.149 | 2.44 |
-| hot_humid | chill_lounge | 26976 | 1.049 | 2.47 |
-| hot_humid | minimal_tech | 2355 | 0.977 | 2.48 |
-| hot_humid | live_match_hype | 2208 | 0.861 | 2.1 |
-| hot_humid | rain_atmos | 2215 | 0.813 | 2.04 |
-| hot_humid | sunrise_fresh | 2144 | 0.653 | 2.37 |
-| hot_humid | cozy_warm | 2277 | 0.571 | 2.13 |
-| sunny | energetic_sport | 1998 | 1.702 | 2.86 |
-| sunny | minimal_tech | 4246 | 1.484 | 2.48 |
-| sunny | sunrise_fresh | 49454 | 1.478 | 2.7 |
-| sunny | chill_lounge | 4147 | 1.278 | 2.51 |
-| sunny | bold_neon | 2107 | 1.234 | 2.42 |
-| sunny | cozy_warm | 4188 | 1.17 | 2.58 |
-| sunny | urban_commute | 3942 | 1.167 | 2.4 |
-| sunny | live_match_hype | 4044 | 1.088 | 2.09 |
-| sunny | night_calm | 4101 | 0.951 | 2.23 |
-| sunny | rain_atmos | 4086 | 0.734 | 1.81 |
+| heavy_rain | sunrise_fresh | 3290 | 0.942 | 2.18 |
+| hot_humid | bold_neon | 1120 | 1.964 | 2.43 |
+| hot_humid | night_calm | 2199 | 1.273 | 2.36 |
+| hot_humid | energetic_sport | 1106 | 1.266 | 2.7 |
+| hot_humid | urban_commute | 2269 | 1.146 | 2.44 |
+| hot_humid | chill_lounge | 26966 | 1.068 | 2.47 |
+| hot_humid | minimal_tech | 2354 | 0.935 | 2.48 |
+| hot_humid | live_match_hype | 2205 | 0.862 | 2.11 |
+| hot_humid | rain_atmos | 2215 | 0.813 | 2.05 |
+| hot_humid | sunrise_fresh | 2143 | 0.653 | 2.37 |
+| hot_humid | cozy_warm | 2268 | 0.573 | 2.13 |
+| sunny | energetic_sport | 2000 | 1.8 | 2.87 |
+| sunny | sunrise_fresh | 49534 | 1.474 | 2.7 |
+| sunny | minimal_tech | 4252 | 1.458 | 2.48 |
+| sunny | chill_lounge | 4164 | 1.273 | 2.51 |
+| sunny | bold_neon | 2109 | 1.233 | 2.42 |
+| sunny | urban_commute | 3950 | 1.19 | 2.4 |
+| sunny | cozy_warm | 4197 | 1.168 | 2.58 |
+| sunny | live_match_hype | 4048 | 1.062 | 2.08 |
+| sunny | night_calm | 4104 | 0.926 | 2.23 |
+| sunny | rain_atmos | 4093 | 0.733 | 1.81 |
 
 ## Live app decisions flowing back through Lakebase -> Lakehouse Sync -> pipeline (gold.mv_live_simulations)
 
@@ -148,12 +146,7 @@ SELECT brand, weather, user_state, chosen_theme, MEASURE(decisions) decisions, r
 
 | brand | weather | user_state | chosen_theme | decisions | ctr_lift_pct | ecpm_lift_pct | dwell_s | attention |
 |---|---|---|---|---|---|---|---|---|
-| starbucks | heavy_rain | just_missed_train | cozy_warm | 6 | 129.0 | 126.0 | 3.42 | 82.1 |
-| nike | cloudy | relaxing_at_home | chill_lounge | 5 | 102.0 | 98.0 | 2.89 | 63.3 |
-| nike | sunny | working_out | sunrise_fresh | 2 | 308.0 | 289.0 | 4.3 | 87.5 |
-| nike | heavy_rain | working_out | sunrise_fresh | 2 | 198.0 | 185.0 | 3.42 | 82.2 |
-| nike | hot_humid | at_office | minimal_tech | 2 | 47.0 | 65.0 | 3.42 | 63.0 |
-| starbucks | hot_humid | at_office | minimal_tech | 1 | 32.0 | 51.0 | 2.99 | 61.1 |
+| starbucks | heavy_rain | just_missed_train | cozy_warm | 2 | 103.0 | 106.0 | 3.75 | 84.4 |
 
 ## Top learned CTR weights (ml.model_coefficients) - model recovers context x creative interactions
 
@@ -163,21 +156,21 @@ SELECT model_version, feature, round(weight,3) weight FROM glance_genad.ml.model
 
 | model_version | feature | weight |
 |---|---|---|
-| 7 | brand=nike|user_state=working_out | 0.298 |
-| 7 | theme=chill_lounge|user_state=relaxing_at_home | 0.27 |
-| 7 | theme=rain_atmos|weather=heavy_rain | 0.222 |
-| 7 | angle=performance|user_state=working_out | 0.209 |
-| 7 | theme=sunrise_fresh|weather=sunny | 0.206 |
-| 7 | theme=cozy_warm|weather=cold | 0.204 |
-| 7 | theme=urban_commute|time_slot=morning_rush | 0.193 |
-| 7 | brand=starbucks|user_state=just_missed_train | 0.184 |
-| 7 | theme=sunrise_fresh|time_slot=morning_rush | 0.173 |
-| 7 | theme=minimal_tech|user_state=at_office | 0.17 |
-| 7 | brand=nike|segment=fitness_enthusiast | 0.16 |
-| 7 | angle=comfort|user_state=relaxing_at_home | 0.159 |
-| 7 | theme=sunrise_fresh|segment=tech_professional | 0.15 |
-| 7 | theme=sunrise_fresh|user_state=working_out | 0.146 |
-| 7 | angle=comfort|weather=heavy_rain | 0.135 |
+| 1 | brand=nike|user_state=working_out | 0.343 |
+| 1 | theme=chill_lounge|user_state=relaxing_at_home | 0.212 |
+| 1 | theme=cozy_warm|weather=cold | 0.202 |
+| 1 | theme=sunrise_fresh|weather=sunny | 0.2 |
+| 1 | brand=nike|segment=fitness_enthusiast | 0.199 |
+| 1 | angle=performance|user_state=working_out | 0.187 |
+| 1 | theme=rain_atmos|weather=heavy_rain | 0.177 |
+| 1 | theme=sunrise_fresh|time_slot=morning_rush | 0.163 |
+| 1 | angle=comfort|user_state=relaxing_at_home | 0.148 |
+| 1 | brand=starbucks|user_state=just_missed_train | 0.145 |
+| 1 | theme=minimal_tech|user_state=at_office | 0.142 |
+| 1 | theme=sunrise_fresh|user_state=working_out | 0.139 |
+| 1 | angle=social_fomo|live_event=cricket_live | 0.129 |
+| 1 | angle=comfort|weather=heavy_rain | 0.127 |
+| 1 | theme=urban_commute|time_slot=morning_rush | 0.127 |
 
 ## Saturation calibration parameters exported with the model
 
@@ -187,15 +180,15 @@ SELECT model_name, feature, weight FROM glance_genad.ml.model_coefficients WHERE
 
 | model_name | feature | weight |
 |---|---|---|
-| ctr | __intercept__ | -1.0628105873570006 |
-| ctr | __sat_A__ | 0.6 |
-| ctr | __sat_scale__ | 0.85 |
-| dwell | __intercept__ | 0.30559412651717016 |
-| dwell | __sat_A__ | 0.5 |
+| ctr | __intercept__ | -1.031933006013565 |
+| ctr | __sat_A__ | 1.7 |
+| ctr | __sat_scale__ | 0.7 |
+| dwell | __intercept__ | 0.3067604082961464 |
+| dwell | __sat_A__ | 0.6 |
 | dwell | __sat_scale__ | 1.15 |
-| dwell | __sigma__ | 0.4506188182446385 |
-| opt_out | __intercept__ | -1.0568461863986431 |
-| opt_out | __sat_A__ | 0.3 |
+| dwell | __sigma__ | 0.45078969556816867 |
+| opt_out | __intercept__ | -1.0593417183858653 |
+| opt_out | __sat_A__ | 0.4 |
 | opt_out | __sat_scale__ | 1.3 |
 
 ## UC column masks in effect (queried as a user NOT in glance_pii_readers)
@@ -225,9 +218,9 @@ SELECT table_schema, table_name, 'row_filter' kind, filter_name AS fn, target_co
 | gold | fact_ad_impressions | row_filter | glance_genad.governance.brand_row_filter | brand |
 | silver | silver_ad_impressions | row_filter | glance_genad.governance.brand_row_filter | brand |
 | silver | silver_user_profiles | column_mask | glance_genad.governance.mask_phone | phone |
-| silver | silver_user_profiles | column_mask | glance_genad.governance.mask_email | email |
 | silver | silver_user_profiles | column_mask | glance_genad.governance.mask_name | full_name |
 | silver | silver_user_profiles | column_mask | glance_genad.governance.mask_ad_id | device_ad_id |
+| silver | silver_user_profiles | column_mask | glance_genad.governance.mask_email | email |
 
 ## Brand entitlements driving the row filter
 
@@ -237,7 +230,7 @@ SELECT principal, brand, granted_by FROM glance_genad.governance.brand_entitleme
 
 | principal | brand | granted_by |
 |---|---|---|
-| 81f5cf7e-a15f-4710-8f01-03b28e0fe4ed | * | deepak.suryaprakash@databricks.com |
+| 75e7265a-87ce-4285-bea1-3aa1a5036d48 | * | deepak.suryaprakash@databricks.com |
 | deepak.suryaprakash@databricks.com | * | deepak.suryaprakash@databricks.com |
 
 ## Live context in gold (from the Lakebase stream)
@@ -248,16 +241,16 @@ SELECT * FROM glance_genad.gold.live_context_latest ORDER BY city, signal_type
 
 | city | signal_type | signal_key | signal_value | temp_c | intensity | observed_at |
 |---|---|---|---|---|---|---|
-| Bengaluru | live_event | cricket_live | IND 195/5 (19.2 ov) vs AUS |  | 0.9 | 2026-11-05T15:17:49.953Z |
-| Bengaluru | transit | train_delay | Purple line metro: 9 min headway |  | 0.4 | 2026-11-05T13:08:23.552Z |
-| Bengaluru | weather | cloudy | Cloudy, 23°C | 23.0 | 0.47 | 2026-11-05T15:17:19.901Z |
-| Delhi | live_event | city_marathon | Delhi Half Marathon this Sunday — 42k registered |  | 0.55 | 2026-11-05T13:08:23.552Z |
-| Delhi | weather | cloudy | Cloudy, 25°C | 24.0 | 0.23 | 2026-11-05T15:17:14.892Z |
-| Hyderabad | live_event | esports_final | BGMI Masters Grand Final — Map 3 live |  | 0.8 | 2026-11-05T13:08:23.552Z |
-| Hyderabad | weather | cloudy | Cloudy, 24°C | 26.0 | 0.66 | 2026-11-05T15:17:39.936Z |
-| Jakarta | weather | cold | Cold, 6°C | 10.0 | 0.62 | 2026-11-05T15:16:54.847Z |
-| Mumbai | live_event | football_live | Mumbai City 2-2 Bengaluru FC (79') |  | 0.75 | 2026-11-05T15:17:49.953Z |
-| Mumbai | transit | train_delay | Western line locals running 20 min late |  | 0.8 | 2026-11-05T15:17:34.928Z |
-| Mumbai | weather | heavy_rain | Heavy Rain, 24°C | 26.0 | 0.54 | 2026-11-05T15:17:49.953Z |
-| Pune | weather | sunny | Sunny, 31°C | 32.0 | 0.5 | 2026-11-05T15:17:44.945Z |
+| Bengaluru | live_event | cricket_live | IND 220/4 (19.2 ov) vs AUS |  | 0.9 | 2026-11-14T15:29:55.603Z |
+| Bengaluru | transit | train_delay | Purple line metro: 9 min headway |  | 0.4 | 2026-11-14T15:03:33.264Z |
+| Bengaluru | weather | sunny | Sunny, 29°C | 31.0 | 0.54 | 2026-11-14T15:29:50.595Z |
+| Delhi | live_event | city_marathon | Delhi Half Marathon this Sunday — 42k registered |  | 0.55 | 2026-11-14T15:03:33.264Z |
+| Delhi | weather | cold | Cold, 7°C | 11.0 | 0.39 | 2026-11-14T15:29:25.562Z |
+| Hyderabad | live_event | esports_final | BGMI Masters Grand Final — Map 3 live |  | 0.8 | 2026-11-14T15:03:33.264Z |
+| Hyderabad | weather | cold | Cold, 5°C | 11.0 | 0.09 | 2026-11-14T15:29:55.603Z |
+| Jakarta | weather | sunny | Sunny, 34°C | 31.0 | 0.02 | 2026-11-14T15:29:40.581Z |
+| Mumbai | live_event | football_live | Mumbai City 1-1 Bengaluru FC (79') |  | 0.75 | 2026-11-14T15:29:55.603Z |
+| Mumbai | transit | train_delay | Western line locals running 8 min late |  | 0.32 | 2026-11-14T15:29:55.603Z |
+| Mumbai | weather | hot_humid | Hot Humid, 33°C | 33.0 | 0.14 | 2026-11-14T15:29:35.575Z |
+| Pune | weather | cloudy | Overcast, 24°C | 24.0 | 0.3 | 2026-11-14T15:03:33.264Z |
 

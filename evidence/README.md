@@ -1,6 +1,6 @@
 # Execution evidence
 
-Collected 2026-11-09 10:16 UTC from workspace profile `fevm-biocon` by `scripts/collect_evidence.py`.
+Collected 2026-11-14 15:38 UTC from workspace profile `fevm-glance` by `scripts/collect_evidence.py`.
 Everything here is real command / query / API output captured as text from the running build.
 
 - [01_query_results.md](01_query_results.md) - SQL query results: medallion counts, KPIs, metric views, governance

@@ -1,4 +1,4 @@
-# Platform resource status (collected 2026-11-09 10:16 UTC)
+# Platform resource status (collected 2026-11-14 15:38 UTC)
 
 ## Lakebase Postgres (project glance-genad) - live row counts via psql
 
@@ -6,9 +6,9 @@
 t                          | count 
 ----------------------------------------------------+-------
  user_profiles                                      | 20006
- context_signals                                    |    52
+ context_signals                                    |    54
  brand_asset_components                             |    16
- ad_decisions (written by app)                      |    42
+ ad_decisions (written by app)                      |     6
  glance_serving.model_coefficients (synced from UC) |  2020
 (5 rows)
 ```
@@ -20,7 +20,7 @@ t                          | count
  {
   "catalog": "glance_genad",
   "cdf_config_id": "glance_ops_to_bronze",
-  "create_time": "2026-11-05T13:09:16.442Z",
+  "create_time": "2026-11-14T15:03:42.183Z",
   "name": "projects/glance-genad/branches/production/databases/databricks-postgres/cdf-configs/glance_ops_to_bronze",
   "postgres_schema": "glance_ops",
   "schema": "bronze"
@@ -35,14 +35,14 @@ t                          | count
  "detailed_state": "SYNCED_TABLE_ONLINE_NO_PENDING_UPDATE",
  "last_sync": {
   "delta_table_sync_info": {
-   "delta_commit_time": "2026-11-05T15:43:15Z",
-   "delta_commit_version": 21
+   "delta_commit_time": "2026-11-14T15:09:15Z",
+   "delta_commit_version": 2
   },
-  "sync_end_time": "2026-11-05T15:43:56.465613Z",
-  "sync_start_time": "2026-11-05T15:43:53.800692Z"
+  "sync_end_time": "2026-11-14T15:11:04.946692Z",
+  "sync_start_time": "2026-11-14T15:10:56.500613Z"
  },
- "message": "Synced table creation succeeded using Delta Live Tables: https://fe-sandbox-serverless-sandbox-8bg9w4.cloud.databricks.com#joblist/pipelines/a00ffbe2-89f3-4ea1-9778-3859f7d39415/updates/5908556e-69c1-4091-a670-181b88daa1a9.",
- "pipeline_id": "a00ffbe2-89f3-4ea1-9778-3859f7d39415",
+ "message": "Synced table creation succeeded using Delta Live Tables: https://fe-sandbox-serverless-sandbox-5y8x8i.cloud.databricks.com#joblist/pipelines/b5520c6a-1d7a-422d-afb9-55ea3b57c312/updates/f2c82088-d2fc-4618-92bc-d115a9927273.",
+ "pipeline_id": "b5520c6a-1d7a-422d-afb9-55ea3b57c312",
  "project": "projects/glance-genad",
  "unity_catalog_provisioning_state": "ACTIVE"
 }
@@ -52,9 +52,9 @@ t                          | count
 
 ```json
 {
- "index_url": "fe-sandbox-serverless-sandbox-8bg9w4.cloud.databricks.com/api/2.0/vector-search/indexes/glance_genad.gold.brand_asset_registry_index",
+ "index_url": "fe-sandbox-serverless-sandbox-5y8x8i.cloud.databricks.com/api/2.0/vector-search/indexes/glance_genad.gold.brand_asset_registry_index",
  "indexed_row_count": 16,
- "message": "Index creation succeeded. Check latest status: https://fe-sandbox-serverless-sandbox-8bg9w4.cloud.databricks.com/explore/data/glance_genad/gold/brand_asset_registry_index",
+ "message": "Index creation succeeded. Check latest status: https://fe-sandbox-serverless-sandbox-5y8x8i.cloud.databricks.com/explore/data/glance_genad/gold/brand_asset_registry_index",
  "ready": true
 }
 ```
@@ -70,35 +70,35 @@ t                          | count
    "starbucks",
    "Mobile Order & Pay",
    true,
-   0.5619147218636665
+   0.5619686242344363
   ],
   [
    "sb_hot_latte",
    "starbucks",
    "Hot latte warm-up",
    true,
-   0.4994692014966167
+   0.4994762824265595
   ],
   [
    "nk_gtx_waterproof",
    "nike",
    "All-weather GORE-TEX",
    true,
-   0.49277287725658375
+   0.49281281312302916
   ],
   [
    "nk_zoom_speed",
    "nike",
    "Morning speed",
    true,
-   0.4867271448963051
+   0.4867687201126605
   ],
   [
    "sb_office_focus",
    "starbucks",
    "Desk-side focus",
    true,
-   0.48612317512194453
+   0.4861758486393331
   ]
  ]
 }
@@ -109,7 +109,7 @@ t                          | count
 ```json
 {
  "name": "glance-genad",
- "url": "https://glance-genad-7474647312316070.aws.databricksapps.com",
+ "url": "https://glance-genad-7474659149187518.aws.databricksapps.com",
  "app_status": {
   "message": "App has status: App is running",
   "state": "RUNNING"
@@ -119,20 +119,20 @@ t                          | count
   "state": "ACTIVE"
  },
  "active_deployment": {
-  "create_time": "2026-11-09T09:58:49Z",
+  "create_time": "2026-11-14T15:14:48Z",
   "creator": "deepak.suryaprakash@databricks.com",
   "deployment_artifacts": {
-   "source_code_path": "/Workspace/Users/81f5cf7e-a15f-4710-8f01-03b28e0fe4ed/src/01f1dc24298e1d86afe67ea3948f1e81"
+   "source_code_path": "/Workspace/Users/75e7265a-87ce-4285-bea1-3aa1a5036d48/src/01f1e03e220a1d449682a28d2d713911"
   },
-  "deployment_id": "01f1dc24298e1d86afe67ea3948f1e81",
+  "deployment_id": "01f1e03e220a1d449682a28d2d713911",
   "mode": "SNAPSHOT",
   "source_code_path": "/Workspace/Users/deepak.suryaprakash@databricks.com/.bundle/glance_genad/files/app",
   "status": {
    "message": "App started successfully",
    "state": "SUCCEEDED"
   },
-  "update_time": "2026-11-09T09:58:58Z"
+  "update_time": "2026-11-14T15:15:02Z"
  },
- "service_principal_client_id": "81f5cf7e-a15f-4710-8f01-03b28e0fe4ed"
+ "service_principal_client_id": "75e7265a-87ce-4285-bea1-3aa1a5036d48"
 }
 ```

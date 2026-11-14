@@ -14,7 +14,7 @@ from datetime import datetime, timezone
 
 PROFILE, APP = sys.argv[1], sys.argv[2].rstrip("/")
 OUT = os.path.join(os.path.dirname(__file__), "..", "evidence")
-WAREHOUSE = "e55438f8a8ce03e0"
+WAREHOUSE = os.getenv("WAREHOUSE_ID", "2e3fc3596c58e22d")
 os.makedirs(OUT, exist_ok=True)
 INDEX = []
 

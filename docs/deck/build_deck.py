@@ -208,16 +208,16 @@ box(p, 5.7, 5.7, 6.78, 1.0, fill=OAT, outline=OAT2, fs=13, valign="MIDDLE", rich
      "instead of tune out?", {})])
 
 # 2. Executive summary: lead with the outcome
-p = content_slide("+83% eCPM from the same impressions, with fewer users opting out",
+p = content_slide("+79% eCPM from the same impressions, with fewer users opting out",
                   "Model-optimized generative lock-screen ads vs. today's static banner (off-policy evaluation, 600k impressions)")
 W, X0, Y0, G = 2.78, 0.82, 2.0, 0.18
-kpi_tile(p, X0 + 0 * (W + G), Y0, W, 2.25, "+83%", "eCPM (yield)", "$4.96 → $9.10 per 1,000 impressions", LAVA, "✓ target +50–75%")
-kpi_tile(p, X0 + 1 * (W + G), Y0, W, 2.25, "+77%", "Click-through rate", "1.10% → 1.96% CTR", BLUE, "✓ significant CTR lift")
-kpi_tile(p, X0 + 2 * (W + G), Y0, W, 2.25, "3.1 s", "Avg. active interaction", "0.94 s → 3.10 s per impression", GREEN, "✓ target > 2.5 s")
-kpi_tile(p, X0 + 3 * (W + G), Y0, W, 2.25, "−19%", "Ad-related opt-outs", "1.10% → 0.89% opt-outs + uninstalls", YELLOW, "✓ target −15–20%")
+kpi_tile(p, X0 + 0 * (W + G), Y0, W, 2.25, "+79%", "eCPM (yield)", "$4.90 → $8.75 per 1,000 impressions", LAVA, "✓ target +50–75%")
+kpi_tile(p, X0 + 1 * (W + G), Y0, W, 2.25, "+71%", "Click-through rate", "1.08% → 1.84% CTR", BLUE, "✓ significant CTR lift")
+kpi_tile(p, X0 + 2 * (W + G), Y0, W, 2.25, "3.1 s", "Avg. active interaction", "0.94 s → 3.13 s per impression", GREEN, "✓ target > 2.5 s")
+kpi_tile(p, X0 + 3 * (W + G), Y0, W, 2.25, "−27%", "Ad-related opt-outs", "1.12% → 0.82% opt-outs + uninstalls", YELLOW, "✓ beats target −15–20%")
 box(p, 0.82, 4.45, 5.75, 2.05, fill=NAVY, rich=[
     ("Executive sponsor  ", {"bold": True, "color": YELLOW}), ("CEO · CRO · CFO\n", {"color": "#C5CED2"}),
-    ("≈ $15M incremental annual earnings per 10M daily lock-screen impressions\n", {"bold": True, "fs": 15}),
+    ("≈ $14M incremental annual earnings per 10M daily lock-screen impressions\n", {"bold": True, "fs": 15}),
     ("Higher yield from existing inventory (no new supply), lower churn risk on the lock-screen franchise, "
      "and a premium, differentiated ad product for brands.", {"fs": 12})], color=WHITE, fs=12, inset=0.2)
 box(p, 6.72, 4.45, 5.76, 2.05, fill=OAT, outline=OAT2, rich=[
@@ -226,7 +226,7 @@ box(p, 6.72, 4.45, 5.76, 2.05, fill=OAT, outline=OAT2, rich=[
     ("One governed platform for signals, models, GenAI and BI. Every decision is explainable, logged and "
      "measured in governed metric views your teams can query in plain English.", {"fs": 12})], fs=12, inset=0.2)
 footnote(p, "Demo build on synthetic ad-server logs; figures are model predictions to be validated in a live A/B pilot. "
-            "$15M = (9.10 − 4.96) × 10M / 1,000 × 365.")
+            "$14M = (8.75 − 4.90) × 10M / 1,000 × 365.")
 
 # 3. Business problem
 p = content_slide("Static ads are tuned out, and every ignored impression costs yield and users",
@@ -293,9 +293,9 @@ box(p, 0.82, 4.15, 11.66, 2.65, fill=OAT, outline=OAT2)
 box(p, 1.05, 4.3, 5.6, 0.4, "Example decision from the live demo", fs=13, bold=True, color=LAVA)
 box(p, 1.05, 4.72, 5.4, 2.0, fs=12, rich=[
     ("Context: ", {"bold": True}), ("Starbucks · heavy rain · 8 AM rush hour · daily commuter who just missed a train\n\n", {}),
-    ("Decision: ", {"bold": True}), ("Urban Commute layout + time-saving angle; Vector Search matched ‘Mobile Order & Pay’\n\n", {}),
-    ("Copy (LLM): ", {"bold": True}), ("“Missed your train? Coffee's ready. Rain and rush hour? Pre-order on the app and skip the line.”", {"italic": True})])
-for i, (v, l) in enumerate([("+102%", "predicted CTR"), ("+105%", "predicted eCPM"), ("3.6 s", "predicted interaction")]):
+    ("Decision: ", {"bold": True}), ("Cozy / Warm layout + time-saving angle; Vector Search matched ‘Mobile Order & Pay’\n\n", {}),
+    ("Copy (LLM): ", {"bold": True}), ("“Missed your train? Your coffee's waiting. Rainy morning, rush hour crowds. Tap to pre-order and skip the line.”", {"italic": True})])
+for i, (v, l) in enumerate([("+103%", "predicted CTR"), ("+106%", "predicted eCPM"), ("3.7 s", "predicted interaction")]):
     x = 6.85 + i * 1.85
     box(p, x, 4.75, 1.7, 1.5, fill=WHITE, outline=OAT2)
     box(p, x, 4.9, 1.7, 0.6, v, fs=26, bold=True, color=[LAVA, LAVA, GREEN][i], align="CENTER")
@@ -376,7 +376,7 @@ for i, (h, tech, ms) in enumerate(det):
     box(p, x, 3.2, 1.82, 0.5, tech, fs=10, color=GRAY, align="CENTER")
     box(p, x, 3.68, 1.82, 0.38, ms, fs=12, bold=True, color=LAVA, align="CENTER")
 trust = [("Explainable", "Each choice shows the learned signals behind it, e.g. ‘Time-saving × Just missed a train’ and "
-                          "‘Urban Commute × 8 AM rush hour’, so ad ops can see why a layout won."),
+                          "‘Cozy / Warm × Heavy Rain’, so ad ops can see why a layout won."),
          ("Brand-safe by design", "Unsafe assets are retrieved but rejected (e.g. an AI neon-pink Nike recolor). "
                                   "Blocked themes and angles are excluded before scoring; generated copy is checked against banned phrases."),
          ("Measured, end to end", "Every decision is written to Lakebase, synced to Delta and surfaced in metric views, "
@@ -394,17 +394,17 @@ p = content_slide("How the solution maps to each objective",
                   "Optimized engine vs. static control: all four KPI targets met, with brand safety enforced on every creative")
 table(p, 0.82, 2.0, 11.66, 3.65, [
     ["Objective", "Target", "Result", "How the solution delivers it"],
-    ["CTR lift", "Significant lift", "+77%  (1.10% → 1.96%)", "Context × creative model picks the highest-yield of 50 layout/message combinations for each moment"],
-    ["Avg. interaction", "> 2.5 s", "3.10 s  (from 0.94 s)", "Immersive lock-screen widget that fits the moment (rain, commute, live match) instead of a banner"],
-    ["eCPM", "+50–75%", "+83%  ($4.96 → $9.10)", "Optimizes expected yield directly: CTR × CPC + engaged views × CPE + CPM floor"],
-    ["Opt-outs / uninstalls", "−15–20%", "−19.4%", "Relevance replaces interruption; the model avoids mismatched creatives, which raise opt-outs"],
+    ["CTR lift", "Significant lift", "+71%  (1.08% → 1.84%)", "Context × creative model picks the highest-yield of 50 layout/message combinations for each moment"],
+    ["Avg. interaction", "> 2.5 s", "3.13 s  (from 0.94 s)", "Immersive lock-screen widget that fits the moment (rain, commute, live match) instead of a banner"],
+    ["eCPM", "+50–75%", "+79%  ($4.90 → $8.75)", "Optimizes expected yield directly: CTR × CPC + engaged views × CPE + CPM floor"],
+    ["Opt-outs / uninstalls", "−15–20%", "−26.5%", "Relevance replaces interruption; the model avoids mismatched creatives, which raise opt-outs"],
     ["Brand safety", "No violations", "Every served creative passes", "Brand registry with safety flags in Vector Search, blocked themes/angles, copy validation"],
 ], col_w=[1.9, 1.5, 2.25, 6.01], fs=11, highlight_col=2)
 box(p, 0.82, 5.85, 11.66, 0.9, fill=NAVY, color=WHITE, fs=13, valign="MIDDLE", inset=0.2, rich=[
     ("Why the data science matters: ", {"bold": True, "color": YELLOW}),
-    ("‘generative’ alone is not enough. Naive generative layouts (rules + random) deliver +36% eCPM and −13% opt-outs; "
+    ("‘generative’ alone is not enough. Naive generative layouts (rules + random) deliver +36% eCPM and −18% opt-outs; "
      "model-driven optimization is what clears the targets.", {})])
-footnote(p, "Off-policy evaluation on 6,000 held-out contexts, model v7 (MLflow / Unity Catalog). Synthetic data; validate in live A/B.")
+footnote(p, "Off-policy evaluation on 6,000 held-out contexts, model v1 (MLflow / Unity Catalog). Synthetic data; validate in live A/B.")
 
 # 9. Value framing
 p = content_slide("The value case for the executive sponsor and the domain owner",
@@ -413,12 +413,12 @@ box(p, 0.82, 2.0, 5.75, 4.75, fill=NAVY)
 box(p, 1.05, 2.15, 5.3, 0.45, "Executive sponsor · CEO / CRO / CFO", fs=15, bold=True, color=YELLOW)
 table(p, 1.05, 2.7, 5.3, 1.45, [
     ["Per 10M daily impressions", "Static", "Generative"],
-    ["Earnings per day", "$49.6K", "$91.0K"],
-    ["Earnings per year", "$18.1M", "$33.2M"],
+    ["Earnings per day", "$49.0K", "$87.5K"],
+    ["Earnings per year", "$17.9M", "$31.9M"],
 ], col_w=[2.5, 1.4, 1.4], header_fill=LAVA, fs=11, highlight_col=2)
 box(p, 1.05, 4.3, 5.3, 2.4, color=WHITE, fs=12, rich=[
-    ("+$15.1M a year incremental from existing inventory\n", {"bold": True, "fs": 14}),
-    ("• Yield up without adding supply or ad load\n• −19% opt-outs protects the lock-screen audience and future revenue\n"
+    ("+$14.1M a year incremental from existing inventory\n", {"bold": True, "fs": 14}),
+    ("• Yield up without adding supply or ad load\n• −27% opt-outs protects the lock-screen audience and future revenue\n"
      "• Premium, differentiated ‘contextual moments’ product to sell to brands\n• One platform, lower total cost than stitching point tools", {})])
 box(p, 6.72, 2.0, 5.76, 4.75, fill=OAT, outline=OAT2)
 box(p, 6.95, 2.15, 5.3, 0.45, "Domain owner · Ad Products & Ad Ops", fs=15, bold=True, color=LAVA)
@@ -428,7 +428,7 @@ box(p, 6.95, 2.7, 5.3, 4.0, fs=12, rich=[
     ("Trust and iterate fast\n", {"bold": True}), ("Explainable decisions; retrain → new weights flow to serving automatically.\n\n", {}),
     ("Self-serve answers\n", {"bold": True}), ("Governed metric views + Genie let sales and ad ops ask ‘which theme wins in rain?’ directly.\n\n", {}),
     ("Governed by default\n", {"bold": True}), ("Advertiser data isolation, PII masking and lineage in Unity Catalog.", {})])
-footnote(p, "Earnings = eCPM × impressions / 1,000. eCPM $4.96 (static) vs $9.10 (optimized generative), model v7. Illustrative, synthetic data.")
+footnote(p, "Earnings = eCPM × impressions / 1,000. eCPM $4.90 (static) vs $8.75 (optimized generative), model v1. Illustrative, synthetic data.")
 
 # 10. Conclusion + next steps
 p = content_slide("Conclusion: relevance is the new reach",
@@ -436,9 +436,9 @@ p = content_slide("Conclusion: relevance is the new reach",
 for i, (h, body, acc) in enumerate([
         ("Proven in a working build", "End to end on Databricks: live context in Lakebase, medallion pipelines, three trained models, "
                                       "Vector Search guardrails, LLM copy, an app and Genie, all governed in Unity Catalog.", BLUE),
-        ("Hits every target KPI", "+77% CTR · 3.1 s interaction · +83% eCPM · −19% opt-outs vs. the static banner, with "
+        ("Hits every target KPI", "+71% CTR · 3.1 s interaction · +79% eCPM · −27% opt-outs vs. the static banner, with "
                                   "brand safety enforced on every creative.", LAVA),
-        ("Worth ≈ $15M a year per 10M daily impressions", "Higher yield from the inventory Glance already has, while protecting the "
+        ("Worth ≈ $14M a year per 10M daily impressions", "Higher yield from the inventory Glance already has, while protecting the "
                                                           "audience that makes it valuable.", GREEN)]):
     x = 0.82 + i * 3.94
     box(p, x, 2.0, 3.74, 2.25, fill=OAT, outline=OAT2)
